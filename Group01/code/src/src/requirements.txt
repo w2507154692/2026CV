@@ -1,0 +1,20 @@
+# MCSpatNet 细胞检测前端依赖
+# Python 3.8+
+
+# Web 框架
+flask==2.3.3
+flask-cors==4.0.0
+werkzeug==2.3.7
+
+# 深度学习
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+
+# 图像处理
+opencv-python>=4.8.0
+scikit-image>=0.21.0
+pillow>=10.0.0
+
+# 其他依赖
+tqdm>=4.65.0

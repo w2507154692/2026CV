@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCSpatNet 细胞检测系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MCSpatNet 细胞检测系统</h1>
+            <p class="subtitle">基于深度学习的组织病理图像细胞检测与分类</p>
+        </header>
+
+        <main>
+            <!-- 上传区域 -->
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.tif,.tiff" hidden>
+                    <div class="upload-content">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p class="upload-text">点击或拖拽上传图像</p>
+                        <p class="upload-hint">支持 PNG, JPG, TIF 格式</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 进度条 -->
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">正在处理...</p>
+            </section>
+
+            <!-- 结果展示区域 -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <h2>检测结果</h2>
+                
+                <!-- 统计信息 -->
+                <div class="stats-container">
+                    <div class="stat-card total">
+                        <div class="stat-value" id="totalCount">0</div>
+                        <div class="stat-label">细胞总数</div>
+                    </div>
+                    <div id="classStats" class="class-stats">
+                        <!-- 动态生成各类别统计 -->
+                    </div>
+                </div>
+
+                <!-- 图像对比 -->
+                <div class="images-container">
+                    <div class="image-card">
+                        <h3>原始图像</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" src="" alt="原始图像">
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <h3>细胞检测</h3>
+                        <div class="image-wrapper">
+                            <img id="resultImage" src="" alt="细胞检测">
+                        </div>
+                        <p class="image-desc">黑色标记表示检测到的所有细胞中心</p>
+                    </div>
+                    <div class="image-card">
+                        <h3>细胞分类</h3>
+                        <div class="image-wrapper">
+                            <img id="classImage" src="" alt="细胞分类">
+                        </div>
+                        <div class="legend">
+                            <div class="legend-title">图例</div>
+                            <div class="legend-items" id="legendItems">
+                                <!-- 动态生成图例 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <h3>检测热力图</h3>
+                        <div class="image-wrapper">
+                            <img id="heatmapImage" src="" alt="热力图">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="downloadBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        下载结果
+                    </button>
+                    <button class="btn btn-secondary" id="newUploadBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                        重新上传
+                    </button>
+                </div>
+            </section>
+
+            <!-- 错误提示 -->
+            <section class="error-section" id="errorSection" style="display: none;">
+                <div class="error-card">
+                    <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                    <p class="error-message" id="errorMessage"></p>
+                    <button class="btn btn-secondary" onclick="hideError()">确定</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>MCSpatNet Cell Detection System &copy; 2024</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
